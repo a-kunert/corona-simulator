@@ -64,7 +64,7 @@ class Circle(Sprite):
         return self
 
     def contaminate(self):
-        if random.randrange(1, 100) < 60:
+        if random.randrange(1, 100) < Settings().infection_probability:
             self.infect()
 
     def _color(self):
@@ -82,8 +82,9 @@ class Circle(Sprite):
     @staticmethod
     def create(game):
         settings = Settings()
-        x = random.randint(settings.radius, settings.screen_width - settings.radius)
-        y = random.randint(settings.radius, settings.screen_height - settings.radius)
+        screen_rect = game.screen.get_rect()
+        x = random.randint(settings.radius, screen_rect.width - settings.radius)
+        y = random.randint(settings.radius, screen_rect.height - settings.radius)
         position = (x, y)
         direction = random.randint(0, int(1000 * math.pi)) / 1000
         velocity = (math.sin(direction), math.cos(direction))
